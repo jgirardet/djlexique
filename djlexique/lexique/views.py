@@ -29,7 +29,7 @@ def lexique_home(request, slug: str):
 
 
 def _get_add_response_succes(request, context):
-    response = render(request, "lexique/form.html", context)
+    response = render(request, "lexique/lexon/add-form.html", context)
     response["HX-Trigger"] = "newLexiqueEntry"
     return response
 
@@ -45,7 +45,7 @@ def lexique_add_view(request, slug: str):
         if lexons.exists():
             context.update(form.cleaned_data)
             context["objects"] = lexons
-            return render(request, "lexique/form-already-exists.html", context)
+            return render(request, "lexique/lexon/form-already-exists.html", context)
         else:
             form.instance.lexique = lexique
             obj = form.save()
