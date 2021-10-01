@@ -1,0 +1,10 @@
+<button
+    class="btn btn-{{button_color}}"
+    hx-post="{{lexique.get_add_url}}confirmation/"
+    hx-target="#already-exists"
+    hx-swap="outerHTML"
+    hx-vals='"mot1":"{{mot1}}","mot2":"{{mot2}}","confirm":"{{button_confirm}}"'
+    {{button_autofocus}}
+>
+{{button_text}}
+</button>

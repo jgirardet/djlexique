@@ -1,0 +1,32 @@
+<div class="container" id="already-exists">
+    <div class="alert alert-info text-center" role="alert">
+        <h2>Attention, ce mot existe peut-être déjà !</h2>
+        <div class="row justify-content-center fs-3 bg-light">
+            <div class="col text-center">{{mot1}}</div>
+            <div class="col text-center">{{mot2}}</div>
+        </div>
+
+        <p class="fs-5 my-2">
+            l'(es) entrée(s) suivante(s) existent dans la base.
+        </p>
+
+        <ul class="list-group">
+            {% for obj in objects %}
+            <li class="list-group-item">
+                <div class="row justify-content-center">
+                    <div class="col text-center">{{obj.mot1}}</div>
+                    <div class="col text-center">{{obj.mot2}}</div>
+                </div>
+                {% endfor %}
+            </li>
+        </ul>
+        <p class="fs-3 my-2">Confirmer l'ajout ?</p>
+
+        <div class="row justify-content-center my-2">
+            <div class="btn-group w-50">
+                {% include "lexique/button-confirm-add.html" with button_color="success" button_confirm="oui" button_text="oui" button_autofocus="autofocus"  %}
+                {% include "lexique/button-confirm-add.html" with button_color="danger" button_confirm="Annuler" button_text="non"  %}
+            </div>
+        </div>
+    </div>
+</div>

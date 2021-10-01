@@ -1,0 +1,20 @@
+{% extends 'lexique/index.html' %} {% block lexique-content %}
+<h1 class="p-4 text-center">{{lexique|title}}</h1>
+
+{% include "lexique/form.html" %}
+
+<div class="row">
+    <div class="col text-center fs-2">{{lexique.langue1|title}}</div>
+    <div class="col text-center fs-2">{{lexique.langue2|title}}</div>
+</div>
+<ul
+    id="lexique_list_entries"
+    class="list-group"
+    style="overflow-y: auto; max-height: 600px"
+    hx-get="{{lexique.get_list_url}}"
+    hx-trigger="newLexiqueEntry from:body"
+>
+    {% include 'lexique/list.html' %}
+</ul>
+
+{% endblock lexique-content %}

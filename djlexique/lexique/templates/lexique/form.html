@@ -1,0 +1,22 @@
+<form
+  class="row m-3 justify-content-center"
+  hx-post="{{lexique.get_add_url}}"
+  hx-trigger="submit"
+  hx-swap="outerHTML"
+>
+</script>
+  <div class="col-sm col-lg-4">
+    {% include "lexique/input-form.html" with name="mot1" mot=mot1 placeholder=lexique.langue1%}
+  </div>
+  <div class="col-sm col-lg-4 mt-2 mt-sm-0">
+    {% include "lexique/input-form.html" with name="mot2" mot=mot2 placeholder=lexique.langue2 %}
+  </div>
+  <button type="submit" class="d-none"></button>
+ {% if message  %}
+  <div id="messages" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  {{message.content}}
+  <button id="alert_close" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+  {% endif %}
+ 
+</form  >
