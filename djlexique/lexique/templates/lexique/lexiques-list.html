@@ -1,0 +1,15 @@
+    {% for lexique in lexiques %}
+    <li class="list-group-item">
+        <div class="row col fs-3">
+            <div class="col">{{lexique.langue1}}</div>
+            <div class="col">{{lexique.langue2}}</div>
+            <div class="col">
+                <a   href="{{lexique.get_absolute_url}}"class="btn btn-success">
+        
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </li>
+
+    {% endfor %}

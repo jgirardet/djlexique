@@ -16,19 +16,23 @@ Including another URLconf
 from django.urls import path
 from lexique.views import (
     lexique_home,
-    lexique_add_view,
+    lexique_add_lexon_view,
     lexique_list_view,
     lexon_edit_view,
     lexique_add_confirmation_view,
     lexon_delete_view,
+    lexiques_index_view,
+    lexiques_add_view
 )
 from .apps import LexiqueConfig
 
 app_name = LexiqueConfig.name
 urlpatterns = [
+    path("", lexiques_index_view, name="lexiques"),
+    path("add/", lexiques_add_view, name="lexiques-add"),
     path("<slug:slug>/", lexique_home, name="home"),
     path("<slug:slug>/lexons/list/", lexique_list_view, name="list-lexon"),
-    path("<slug:slug>/lexons/add/", lexique_add_view, name="add-lexon"),
+    path("<slug:slug>/lexons/add/", lexique_add_lexon_view, name="add-lexon"),
     path(
         "<slug:slug>/lexons/add_confirmation/",
         lexique_add_confirmation_view,

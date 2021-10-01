@@ -3,21 +3,35 @@ from typing import NamedTuple
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from .models import Lexon, Lexique
 from django.shortcuts import get_object_or_404, render
-from .forms import LexonForm
+from .forms import LexonForm, LexiqueForm
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
-# Create your views here.
 
 
-def get_lexique(request, slug: str):
-    lexique = get_object_or_404(Lexique, slug=slug)
+
+#######################################################################
+# Lexiques managment
+#######################################################################
+
+def lexiques_index_view(request):
     context = {
-        "message": None,
-        "lexique": lexique,
+        "lexiques": Lexique.objects.all()
     }
-    form = LexonForm(request.POST or None)
-    return lexique, context, form
+    return render(request, "lexique/lexiques-index.html", context)
 
+@require_POST
+def lexiques_add_view(request):
+    form  = LexiqueForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    context = {"lexiques": Lexique.objects.all()}
+    return render(request, "lexique/lexiques-list.html", context)
+    
+
+
+#######################################################################
+# Lexique Détail et Lexon
+#######################################################################
 
 def lexique_home(request, slug: str):
     lexique = get_object_or_404(Lexique, slug=slug)
@@ -28,17 +42,8 @@ def lexique_home(request, slug: str):
     return render(request, "lexique/lexique.html", context)
 
 
-def _get_add_response_succes(request, context):
-    response = render(request, "lexique/lexon/add-form.html", context)
-    response["HX-Trigger"] = "newLexiqueEntry"
-    return response
-
-
-# """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-# changer mot1 langue1 c la merde
-# """"
 @require_POST
-def lexique_add_view(request, slug: str):
+def lexique_add_lexon_view(request, slug: str):
     lexique, context, form = get_lexique(request, slug)
     if form.is_valid():
         lexons = lexique.get_lexons(**form.cleaned_data)
@@ -78,7 +83,7 @@ def lexique_list_view(request, slug: str):
     lexique = get_object_or_404(Lexique, slug=slug)
     qs = lexique.langue1_alpha_list()
     context = {"objects": qs, "errors": []}
-    return render(request, "lexique/list.html", context)
+    return render(request, "lexique/lexon-list.html", context)
 
 
 @require_http_methods(["GET", "POST"])
@@ -99,3 +104,24 @@ def lexon_delete_view(request, id: int):
     lexon = get_object_or_404(Lexon, id=id)
     lexon.delete()
     return HttpResponse("")
+
+
+#############################################################
+# privates
+#############################################################
+
+
+def get_lexique(request, slug: str):
+    lexique = get_object_or_404(Lexique, slug=slug)
+    context = {
+        "message": None,
+        "lexique": lexique,
+    }
+    form = LexonForm(request.POST or None)
+    return lexique, context, form
+
+
+def _get_add_response_succes(request, context):
+    response = render(request, "lexique/lexon/add-form.html", context)
+    response["HX-Trigger"] = "newLexiqueEntry"
+    return response
