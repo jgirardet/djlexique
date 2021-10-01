@@ -4,8 +4,7 @@ from django.db.models.query import QuerySet
 from django.db.models.signals import pre_save
 from django.urls import reverse
 from django.utils.text import slugify
-
-# Create your models here.
+from .apps import LexiqueConfig
 
 
 class Lexique(models.Model):
@@ -18,13 +17,19 @@ class Lexique(models.Model):
         return f"lexique {self.langue1} - {self.langue2}"
 
     def get_absolute_url(self):
-        return reverse("lexique-home", kwargs={"slug": self.slug})
+        return reverse(f"{LexiqueConfig.name}:home", kwargs={"slug": self.slug})
 
     def get_add_url(self):
-        return reverse("lexique-add", kwargs={"slug": self.slug})
+        return reverse(f"{LexiqueConfig.name}:add-lexon", kwargs={"slug": self.slug})
 
-    def get_list_url(self):
-        return reverse("lexique-list", kwargs={"slug": self.slug})
+    def get_add_lexon_url(self):
+        return reverse(f"{LexiqueConfig.name}:add-lexon", kwargs={"slug": self.slug})
+
+    def get_add_lexon_confirmation_url(self):
+        return reverse(f"{LexiqueConfig.name}:add-lexon-confirmation", kwargs={"slug": self.slug})
+
+    def get_list_lexon_url(self):
+        return reverse(f"{LexiqueConfig.name}:list-lexon", kwargs={"slug": self.slug})
 
     def langue1_alpha_list(self) -> QuerySet:
         return self.lexon_set.order_by("mot1")
@@ -55,4 +60,4 @@ class Lexon(models.Model):
         return f"{self.mot1}   -   {self.mot2}"
 
     def get_edit_url(self) -> str:
-        return reverse("lexon-edit", kwargs={"id": self.id})
+        return reverse(f"{LexiqueConfig.name}:edit-lexon", kwargs={"id": self.id})

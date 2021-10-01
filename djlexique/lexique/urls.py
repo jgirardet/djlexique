@@ -14,8 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from lexique.views import (
+    lexique_home,
+    lexique_add_view,
+    lexique_list_view,
+    lexon_edit_view,
+    lexique_add_confirmation_view,
+)
+from .apps import LexiqueConfig
+app_name=LexiqueConfig.name
 urlpatterns = [
-    path("lexique/", include('lexique.urls')),
-    path("admin/", admin.site.urls),
+    path("<slug:slug>/", lexique_home, name="home"),
+    path("<slug:slug>/lexons/list/", lexique_list_view, name="list-lexon"),
+    path("<slug:slug>/lexons/add/", lexique_add_view, name="add-lexon"),
+    path("<slug:slug>/lexons/add_confirmation/", lexique_add_confirmation_view, name="add-lexon-confirmation"),
+    path("lexons/<int:id>/edit/", lexon_edit_view, name="edit-lexon"),
 ]

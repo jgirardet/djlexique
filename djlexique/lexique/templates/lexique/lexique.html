@@ -11,7 +11,7 @@
     id="lexique_list_entries"
     class="list-group"
     style="overflow-y: auto; max-height: 600px"
-    hx-get="{{lexique.get_list_url}}"
+    hx-get="{{lexique.get_list_lexon_url}}"
     hx-trigger="newLexiqueEntry from:body"
 >
     {% include 'lexique/list.html' %}

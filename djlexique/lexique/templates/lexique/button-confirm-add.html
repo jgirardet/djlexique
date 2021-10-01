@@ -1,6 +1,6 @@
 <button
     class="btn btn-{{button_color}}"
-    hx-post="{{lexique.get_add_url}}confirmation/"
+    hx-post="{{lexique.get_add_lexon_confirmation_url}}"
     hx-target="#already-exists"
     hx-swap="outerHTML"
     hx-vals='"mot1":"{{mot1}}","mot2":"{{mot2}}","confirm":"{{button_confirm}}"'
