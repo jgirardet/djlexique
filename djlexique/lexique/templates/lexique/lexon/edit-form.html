@@ -1,5 +1,13 @@
 <form class="row" hx-post="{{object.get_edit_url}}" hx-swap="outerHTML">
-    <input class="col" required name="mot1" value="{{object.mot1}}" />
-    <input class="col" required name="mot2" value="{{object.mot2}}" />
+    <input class="col bg-white" required name="mot1" value="{{object.mot1}}" />
+    <input class="col bg-white" required name="mot2" value="{{object.mot2}}" />
     <button type="submit" class="d-none"></button>
+    <button class="btn btn-danger col-1 ms-2"
+        hx-get="{{object.get_delete_url}}"  
+        hx-confirm="Effacer {{object.mot1}} - {{object.mot2}}"
+        hx-swap="outerHTML"
+        hx-target="#li-lexon-{{object.id}}">
+         <i class="fa fa-trash" aria-hidden="true"></i>
+    </button>
 </form>
+

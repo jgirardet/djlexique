@@ -20,6 +20,7 @@ from lexique.views import (
     lexique_list_view,
     lexon_edit_view,
     lexique_add_confirmation_view,
+    lexon_delete_view,
 )
 from .apps import LexiqueConfig
 
@@ -34,4 +35,5 @@ urlpatterns = [
         name="add-lexon-confirmation",
     ),
     path("lexons/<int:id>/edit/", lexon_edit_view, name="edit-lexon"),
+    path("lexons/<int:id>/delete/", lexon_delete_view, name="delete-lexon"),
 ]

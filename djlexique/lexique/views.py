@@ -1,10 +1,10 @@
 from typing import NamedTuple
 
-from django.http.response import HttpResponseBadRequest
+from django.http.response import HttpResponse, HttpResponseBadRequest
 from .models import Lexon, Lexique
 from django.shortcuts import get_object_or_404, render
 from .forms import LexonForm
-from django.views.decorators.http import require_http_methods, require_POST
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 # Create your views here.
 
@@ -32,6 +32,7 @@ def _get_add_response_succes(request, context):
     response = render(request, "lexique/form.html", context)
     response["HX-Trigger"] = "newLexiqueEntry"
     return response
+
 
 # """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 # changer mot1 langue1 c la merde
@@ -67,7 +68,7 @@ def lexique_add_confirmation_view(request, slug=str):
             context["message"] = {"type": "success", "content": f"{str(obj)} ajouté"}
             return _get_add_response_succes(request, context)
         else:
-            context.update(form.cleaned_data) # is_valid doit bien êtr appelé avant
+            context.update(form.cleaned_data)  # is_valid doit bien êtr appelé avant
             return _get_add_response_succes(request, context)
     else:
         return HttpResponseBadRequest("'confirm' flag not provided")
@@ -91,3 +92,10 @@ def lexon_edit_view(request, id: int):
         if form.is_valid():
             form.save()
         return render(request, "lexique/lexon/as_row.html", {"object": lexon})
+
+
+@require_GET
+def lexon_delete_view(request, id: int):
+    lexon = get_object_or_404(Lexon, id=id)
+    lexon.delete()
+    return HttpResponse("")

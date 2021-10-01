@@ -12,11 +12,23 @@
     {% include "lexique/input-form.html" with name="mot2" mot=mot2 placeholder=lexique.langue2 %}
   </div>
   <button type="submit" class="d-none"></button>
+ 
  {% if message  %}
-  <div id="messages" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+  <div id="messages" class="alert alert-success alert-dismissible fade show text-center" role="alert"
+  >
   {{message.content}}
   <button id="alert_close" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
   {% endif %}
- 
 </form  >
+{% comment %} <body _="on every htmx:beforeSend in <button/> 
+           tell it 
+               toggle [@disabled='true'] until htmx:afterOnLoad">
+    <form>
+      <button hx-post="/echo/html">
+        Post
+      </button>
+      <input type="hidden" name="html" value="Clicked!"/>
+      <input type="hidden" name="delay" value="2"/>
+    </form>
+</body> {% endcomment %}

@@ -26,7 +26,9 @@ class Lexique(models.Model):
         return reverse(f"{LexiqueConfig.name}:add-lexon", kwargs={"slug": self.slug})
 
     def get_add_lexon_confirmation_url(self):
-        return reverse(f"{LexiqueConfig.name}:add-lexon-confirmation", kwargs={"slug": self.slug})
+        return reverse(
+            f"{LexiqueConfig.name}:add-lexon-confirmation", kwargs={"slug": self.slug}
+        )
 
     def get_list_lexon_url(self):
         return reverse(f"{LexiqueConfig.name}:list-lexon", kwargs={"slug": self.slug})
@@ -37,7 +39,7 @@ class Lexique(models.Model):
     def langue2_alpha_list(self) -> QuerySet:
         return self.lexon_set.order_by("mot2")
 
-    def get_lexons(self, mot1:str, mot2:str):
+    def get_lexons(self, mot1: str, mot2: str):
         lookups = Q(mot1__iexact=mot1) | Q(mot2__iexact=mot2)
         return self.lexon_set.filter(lookups)
 
@@ -61,3 +63,6 @@ class Lexon(models.Model):
 
     def get_edit_url(self) -> str:
         return reverse(f"{LexiqueConfig.name}:edit-lexon", kwargs={"id": self.id})
+
+    def get_delete_url(self):
+        return reverse(f"{LexiqueConfig.name}:delete-lexon", kwargs={"id": self.id})
