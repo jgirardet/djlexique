@@ -7,31 +7,29 @@ from .forms import LexonForm, LexiqueForm
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 
-
-
 #######################################################################
 # Lexiques managment
 #######################################################################
 
+
 def lexiques_index_view(request):
-    context = {
-        "lexiques": Lexique.objects.all()
-    }
+    context = {"lexiques": Lexique.objects.all()}
     return render(request, "lexique/lexiques-index.html", context)
+
 
 @require_POST
 def lexiques_add_view(request):
-    form  = LexiqueForm(request.POST or None)
+    form = LexiqueForm(request.POST or None)
     if form.is_valid():
         form.save()
     context = {"lexiques": Lexique.objects.all()}
     return render(request, "lexique/lexiques-list.html", context)
-    
 
 
 #######################################################################
 # Lexique Détail et Lexon
 #######################################################################
+
 
 def lexique_home(request, slug: str):
     lexique = get_object_or_404(Lexique, slug=slug)
@@ -83,6 +81,8 @@ def lexique_list_view(request, slug: str):
     lexique = get_object_or_404(Lexique, slug=slug)
     qs = lexique.langue1_alpha_list()
     context = {"objects": qs, "errors": []}
+    if "selectable" in request.POST:
+        context['selectable'] = "on"
     return render(request, "lexique/lexon-list.html", context)
 
 

@@ -9,6 +9,19 @@
     <div class="col text-center fs-2">{{lexique.langue1|title}}</div>
     <div class="col text-center fs-2">{{lexique.langue2|title}}</div>
 </div>
+
+<div id="toolbox" class="row justify-content-end">
+    <div class="form-check col-2">
+    <label class="form-check-label" for="check_selectable">
+    Select
+  </label>
+    <input type="checkbox" class="form-check-input" id="check_selectable" name="selectable"
+    hx-post="{{lexique.get_list_lexon_url}}"
+    hx-target="#lexique_list_entries"
+    />
+    </div>
+</div>
+
 <ul
     id="lexique_list_entries"
     class="list-group"
