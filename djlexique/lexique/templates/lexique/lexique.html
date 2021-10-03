@@ -11,13 +11,12 @@
 </div>
 
 <div id="toolbox" class="row justify-content-end">
-    <div class="form-check col-2">
+    <div class="form-check col-2" >
     <label class="form-check-label" for="check_selectable">
     Select
   </label>
     <input type="checkbox" class="form-check-input" id="check_selectable" name="selectable"
-    hx-post="{{lexique.get_list_lexon_url}}"
-    hx-target="#lexique_list_entries"
+    _="on change(target) tell .lexon-controls toggle .d-none"
     />
     </div>
 </div>

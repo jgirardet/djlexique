@@ -77,8 +77,6 @@ def lexique_list_view(request, slug: str):
     lexique = get_object_or_404(Lexique, slug=slug)
     qs = lexique.langue1_alpha_list()[:LEXON_LIST_LIMIT]
     context = {"objects": qs, "errors": []}
-    if "selectable" in request.POST:
-        context["selectable"] = "on"
     return render(request, "lexique/lexon-list.html", context)
 
 
