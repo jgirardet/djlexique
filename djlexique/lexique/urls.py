@@ -22,7 +22,7 @@ from lexique.views import (
     lexique_add_confirmation_view,
     lexon_delete_view,
     lexiques_index_view,
-    lexiques_add_view
+    lexiques_add_view,
 )
 from .apps import LexiqueConfig
 

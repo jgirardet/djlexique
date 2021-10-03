@@ -5,10 +5,11 @@ import sys
 import pathlib
 import dotenv
 
+
 def main():
     """Run administrative tasks."""
-    if (pathlib.Path()/ ".env").exists():
-        dotenv.read_dotenv()  
+    if (pathlib.Path() / ".env").exists():
+        dotenv.read_dotenv()
     else:
         print("no .env file read")
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djlexique.settings")

@@ -7,6 +7,7 @@ class LexonForm(forms.ModelForm):
         model = Lexon
         fields = ["mot1", "mot2"]
 
+
 class LexiqueForm(forms.ModelForm):
     class Meta:
         model = Lexique

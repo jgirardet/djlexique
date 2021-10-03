@@ -8,27 +8,48 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Lexique',
+            name="Lexique",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('langue1', models.CharField(max_length=20)),
-                ('langue2', models.CharField(max_length=20)),
-                ('slug', models.SlugField(blank=True, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("langue1", models.CharField(max_length=20)),
+                ("langue2", models.CharField(max_length=20)),
+                ("slug", models.SlugField(blank=True, unique=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Lexon',
+            name="Lexon",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('mot1', models.CharField(max_length=40)),
-                ('mot2', models.CharField(max_length=40)),
-                ('created', models.DateField(auto_now_add=True)),
-                ('lexique', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='lexique.lexique')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("mot1", models.CharField(max_length=40)),
+                ("mot2", models.CharField(max_length=40)),
+                ("created", models.DateField(auto_now_add=True)),
+                (
+                    "lexique",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="lexique.lexique",
+                    ),
+                ),
             ],
         ),
     ]
