@@ -12,11 +12,6 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 #######################################################################
 
 
-def lexiques_index_view(request):
-    context = {"lexiques": Lexique.objects.all()}
-    return render(request, "lexique/lexiques-index.html", context)
-
-
 @require_POST
 def lexiques_add_view(request):
     form = LexiqueForm(request.POST or None)
@@ -29,11 +24,12 @@ def lexiques_add_view(request):
 #######################################################################
 # Lexique Détail et Lexon
 #######################################################################
+LEXON_LIST_LIMIT = 100
 
 
 def lexique_home(request, slug: str):
     lexique = get_object_or_404(Lexique, slug=slug)
-    qs = lexique.langue1_alpha_list()
+    qs = lexique.langue1_alpha_list()[:LEXON_LIST_LIMIT]
     form = LexonForm()
     form.instance.lexique = lexique
     context = {"objects": qs, "form": form, "lexique": lexique, "errors": ""}
@@ -79,7 +75,7 @@ def lexique_add_confirmation_view(request, slug=str):
 
 def lexique_list_view(request, slug: str):
     lexique = get_object_or_404(Lexique, slug=slug)
-    qs = lexique.langue1_alpha_list()
+    qs = lexique.langue1_alpha_list()[:LEXON_LIST_LIMIT]
     context = {"objects": qs, "errors": []}
     if "selectable" in request.POST:
         context["selectable"] = "on"

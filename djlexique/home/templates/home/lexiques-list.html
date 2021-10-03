@@ -1,0 +1,18 @@
+    {% for lexique in lexiques %}
+    <li class="list-group-item" >
+    {% comment %} <li class="list-group-item" _='on load tell #quizz_{{lexique.id}} js(you) new bootstrap.Tooltip(you) end'> {% endcomment %}
+        <div class="row col fs-3">
+            <div class="col">{{lexique.langue1}}</div>
+            <div class="col">{{lexique.langue2}}</div>
+            <div class="col">
+                <a   href="{{lexique.get_absolute_url}}"class="btn btn-success" data-bs-toggle="tooltip" title="Lexique" >
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                </a>
+                <a   id="quizz_{{lexique.id}}" href="{{lexique.get_absolute_url}}"class="btn btn-warning"  data-bs-toggle="tooltip" title="Quizz" >
+                    <i class="fa fa-question-circle" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </li>
+
+    {% endfor %}
