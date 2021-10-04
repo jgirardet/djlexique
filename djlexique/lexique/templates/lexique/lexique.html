@@ -1,24 +1,14 @@
-{% extends 'lexique/index.html' %}
-
- {% block lexique-content %}
+{% extends 'lexique/index.html' %} {% block lexique-content %}
 <h1 class="p-4 text-center">{{lexique|title}}</h1>
 
 {% include "lexique/lexon/add-form.html" %}
+{% include "lexique/navbar.html" %}
+
+
 
 <div class="row">
     <div class="col text-center fs-2">{{lexique.langue1|title}}</div>
     <div class="col text-center fs-2">{{lexique.langue2|title}}</div>
-</div>
-
-<div id="toolbox" class="row justify-content-end">
-    <div class="form-check col-2" >
-    <label class="form-check-label" for="check_selectable">
-    Select
-  </label>
-    <input type="checkbox" class="form-check-input" id="check_selectable" name="selectable"
-    _="on change(target) tell .lexon-controls toggle .d-none"
-    />
-    </div>
 </div>
 
 <ul

@@ -29,7 +29,7 @@ LEXON_LIST_LIMIT = 100
 
 def lexique_home(request, slug: str):
     lexique = get_object_or_404(Lexique, slug=slug)
-    qs = lexique.langue1_alpha_list()[:LEXON_LIST_LIMIT]
+    qs = lexique.get_lexons_by()[:LEXON_LIST_LIMIT]
     form = LexonForm()
     form.instance.lexique = lexique
     context = {"objects": qs, "form": form, "lexique": lexique, "errors": ""}
@@ -74,8 +74,9 @@ def lexique_add_confirmation_view(request, slug=str):
 
 
 def lexique_list_view(request, slug: str):
+    order_by = request.GET.get("order_by")
     lexique = get_object_or_404(Lexique, slug=slug)
-    qs = lexique.langue1_alpha_list()[:LEXON_LIST_LIMIT]
+    qs = lexique.get_lexons_by(order_by)[:LEXON_LIST_LIMIT]
     context = {"objects": qs, "errors": []}
     return render(request, "lexique/lexon-list.html", context)
 

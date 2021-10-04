@@ -14,7 +14,6 @@ def main_view(request, slug: str):
     if request.method == "POST":
         form = QuizzForm(request.POST or None)
         form.full_clean()
-        print(form.cleaned_data)
         guess = form.cleaned_data.pop("guess", "")
         go_next = form.cleaned_data.pop("go_next", None)
         quizz = Quizz(**form.cleaned_data, qs=qs)

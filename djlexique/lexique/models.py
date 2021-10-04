@@ -5,6 +5,7 @@ from django.db.models.signals import pre_save
 from django.urls import reverse
 from django.utils.text import slugify
 from .apps import LexiqueConfig
+from django.core.exceptions import FieldError
 
 
 class Lexique(models.Model):
@@ -33,11 +34,11 @@ class Lexique(models.Model):
     def get_list_lexon_url(self):
         return reverse(f"{LexiqueConfig.name}:list-lexon", kwargs={"slug": self.slug})
 
-    def langue1_alpha_list(self) -> QuerySet:
-        return self.lexon_set.order_by("mot1")
-
-    def langue2_alpha_list(self) -> QuerySet:
-        return self.lexon_set.order_by("mot2")
+    def get_lexons_by(self, order_by: str = "mot1"):
+        try:
+            return self.lexon_set.order_by(order_by)
+        except FieldError:
+            return self.lexon_set.order_by("mot1")
 
     def get_lexons(self, mot1: str, mot2: str):
         lookups = Q(mot1__iexact=mot1) | Q(mot2__iexact=mot2)
@@ -55,7 +56,7 @@ pre_save.connect(article_pre_save, sender=Lexique)
 class Lexon(models.Model):
     mot1 = models.CharField(max_length=40)
     mot2 = models.CharField(max_length=40)
-    created = models.DateField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     lexique = models.ForeignKey(Lexique, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
