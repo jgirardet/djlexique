@@ -1,5 +1,6 @@
 - pagination des résultats
 - login
+- sortir index.htlml de lexique
 - améliore le quizz 
     - reset
     - back
@@ -8,4 +9,5 @@
     -nb mot
     - choix récents
     - choix mots
-- deploy 
+- deploy :
+    - static de dev/pkguno
