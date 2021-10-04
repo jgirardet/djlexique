@@ -8,20 +8,6 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 
 
 #######################################################################
-# Lexiques managment
-#######################################################################
-
-
-@require_POST
-def lexiques_add_view(request):
-    form = LexiqueForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-    context = {"lexiques": Lexique.objects.all()}
-    return render(request, "lexique/lexiques-list.html", context)
-
-
-#######################################################################
 # Lexique Détail et Lexon
 #######################################################################
 LEXON_LIST_LIMIT = 100

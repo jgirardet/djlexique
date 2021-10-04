@@ -21,13 +21,11 @@ from lexique.views import (
     lexon_edit_view,
     lexique_add_confirmation_view,
     lexon_delete_view,
-    lexiques_add_view,
 )
 from .apps import LexiqueConfig
 
 app_name = LexiqueConfig.name
 urlpatterns = [
-    path("add/", lexiques_add_view, name="lexiques-add"),
     path("<slug:slug>/", lexique_home, name="home"),
     path("<slug:slug>/lexons/list/", lexique_list_view, name="list-lexon"),
     path("<slug:slug>/lexons/add/", lexique_add_lexon_view, name="add-lexon"),

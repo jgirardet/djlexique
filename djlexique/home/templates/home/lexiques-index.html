@@ -2,11 +2,11 @@
 <h1 class="text-center">LEXIQUES</h1>
 <ul class="list-group" id="lexiques_list"
  _='init tell  <a[data-bs-toggle]/> in me  js(you) new bootstrap.Tooltip(you) end'>
-{% include "lexique/lexiques-list.html" %}
+{% include "home/lexiques-list.html" %}
 </ul
 <h4>Ajouter un nouveau lexique :</h4>
 
-<form hx-post="{% url 'lexique:lexiques-add' %}" hx-target="#lexiques_list"
+<form hx-post="{% url 'home:lexiques-add' %}" hx-target="#lexiques_list"
 _="on htmx:afterOnLoad  call me.reset()"
 >
     <div class="row">
