@@ -74,9 +74,13 @@ def lexique_add_confirmation_view(request, slug=str):
 
 
 def lexique_list_view(request, slug: str):
+    search = request.GET.get("search")
     order_by = request.GET.get("order_by")
     lexique = get_object_or_404(Lexique, slug=slug)
-    qs = lexique.get_lexons_by(order_by)[:LEXON_LIST_LIMIT]
+    if search:
+        qs = lexique.search_lexons(search)[:LEXON_LIST_LIMIT]
+    else:
+        qs = lexique.get_lexons_by(order_by)[:LEXON_LIST_LIMIT]
     context = {"objects": qs, "errors": []}
     return render(request, "lexique/lexon-list.html", context)
 

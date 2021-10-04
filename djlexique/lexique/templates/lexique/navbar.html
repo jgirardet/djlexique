@@ -33,7 +33,7 @@
                                 checked
                             />
                             <label
-                                class="btn btn-outline-secondary w-100 "
+                                class="btn btn-outline-secondary w-100"
                                 checked=""
                                 for="order_by_langue1"
                                 >{{lexique.langue1}}
@@ -53,7 +53,7 @@
                                 autocomplete="off"
                             />
                             <label
-                                class="btn btn-outline-secondary w-100 "
+                                class="btn btn-outline-secondary w-100"
                                 checked
                                 for="order_by_langue2"
                                 >{{lexique.langue2}}
@@ -75,10 +75,10 @@
                             <label
                                 class="btn btn-outline-secondary w-100"
                                 for="order_by_created"
-                                >
+                            >
                                 <span>récents </span>
                                 <i
-                                   class="fas fa-calendar-alt "
+                                    class="fas fa-calendar-alt"
                                     aria-hidden="true"
                                 ></i
                             ></label>
@@ -87,15 +87,22 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <form class="d-flex">
+                <form class="d-flex" id="form_search">
                     <input
                         class="form-control me-2"
                         type="search"
                         placeholder="Search"
                         aria-label="Search"
+                        autocomplete="off"
+                        id="search_input"
+                        hx-get="{{lexique.get_list_lexon_url}}"
+                        hx-target="#lexique_list_entries"
+                        hx-trigger="change,keyup changed delay:500ms"
+                        name="search"
+                        _='on newLexiqueEntry from <body/>  put "" into me.value'
                     />
-                    <button class="btn btn-outline-success" type="submit">
-                        Search
+                    <button class="btn btn-outline-success" type="reset">
+                        Reset
                     </button>
                 </form>
             </li>

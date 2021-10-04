@@ -44,6 +44,15 @@ class Lexique(models.Model):
         lookups = Q(mot1__iexact=mot1) | Q(mot2__iexact=mot2)
         return self.lexon_set.filter(lookups)
 
+    def search_lexons(self, mot: str):
+        lookups = (
+            Q(mot1__contains=mot)
+            | Q(mot2__icontains=mot)
+            | Q(mot1__contains=mot)
+            | Q(mot2__icontains=mot)
+        )
+        return self.lexon_set.filter(lookups)
+
 
 def article_pre_save(sender, instance, *args, **kwargs):
     if not instance.slug:
