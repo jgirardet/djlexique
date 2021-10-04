@@ -1,10 +1,12 @@
 {% extends 'lexique/index.html' %} {% block lexique-content %}
-<h1 class="p-4 text-center">{{lexique|title}}</h1>
 
-{% include "lexique/lexon/add-form.html" %}
-{% include "lexique/navbar.html" %}
+<a href="/" title="Retour à la liste des lexiques" class="link-secondary fs-3">
+    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+</a>
 
+<h1 class="text-center">{{lexique|title}}</h1>
 
+{% include "lexique/lexon/add-form.html" %} {% include "lexique/navbar.html" %}
 
 <div class="row">
     <div class="col text-center fs-2">{{lexique.langue1|title}}</div>
