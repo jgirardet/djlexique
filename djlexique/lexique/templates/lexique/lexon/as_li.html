@@ -1,8 +1,13 @@
 <li
 id="li-lexon-{{object.id}}"
   class="list-group-item bg-opacity-10"
-  _="on mouseenter add .bg-info  end
+ - _="on mouseenter add .bg-info  end
                                                  on mouseleave remove .bg-info"
+{% if forloop.revcounter == 10  %}
+hx-get='{{lexique.get_list_lexon_url}}?page={{ page}}&next_page=true'
+hx-trigger="intersect once"
+hx-swap="afterend"
+{% endif %} 
 
 >
 {% include "lexique/lexon/as_row.html" %}

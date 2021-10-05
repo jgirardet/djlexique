@@ -1,5 +1,8 @@
 {% if objects %}
-{% for object in objects %} {% include 'lexique/lexon/as_li.html' %} {% endfor %}
+{% for object in objects %}
+ {% include 'lexique/lexon/as_li.html' %} 
+ 
+ {% endfor %}
 {%else%}
 <li class="list-group-item">Aucune entrée retrouvée</li>
 {% endif %}

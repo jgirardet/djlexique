@@ -1,11 +1,12 @@
 from typing import NamedTuple
+from django.db.models.query import QuerySet
 
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from .models import Lexon, Lexique
 from django.shortcuts import get_object_or_404, render
 from .forms import LexonForm, LexiqueForm
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
-
+from django.core.paginator import InvalidPage, Paginator
 
 #######################################################################
 # Lexique Détail et Lexon
@@ -63,11 +64,20 @@ def lexique_list_view(request, slug: str):
     search = request.GET.get("search")
     order_by = request.GET.get("order_by")
     lexique = get_object_or_404(Lexique, slug=slug)
+    qs:QuerySet[Lexon] 
     if search:
-        qs = lexique.search_lexons(search)[:LEXON_LIST_LIMIT]
+        qs = lexique.search_lexons(search)
     else:
-        qs = lexique.get_lexons_by(order_by)[:LEXON_LIST_LIMIT]
-    context = {"objects": qs, "errors": []}
+        qs = lexique.get_lexons_by(order_by)
+    pages = Paginator(qs, LEXON_LIST_LIMIT)
+    num_page = int(request.GET.get("page", 1) )
+    if request.GET.get("next_page"):
+        num_page +=1
+    try:
+        objects = pages.page(num_page).object_list
+    except InvalidPage:
+        return HttpResponse('')
+    context = {"lexique":lexique,"objects": objects, "errors": [], "page":num_page}
     return render(request, "lexique/lexon-list.html", context)
 
 
