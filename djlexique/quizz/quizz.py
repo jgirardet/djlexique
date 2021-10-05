@@ -17,6 +17,7 @@ class Quizz:
     question: str = None
     reponse: str = None
     try_index: int = 1
+    success:bool = False
 
     def __post_init__(self, **kwargs) -> None:
         self.score = int(self.score)
@@ -40,7 +41,9 @@ class Quizz:
 
     def check(self, other: str) -> bool:
         if self.reponse == other:
+            self.success=True
             return True
+        self.success=False
         self.try_index += 1
         return False
 

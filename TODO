@@ -1,9 +1,10 @@
 - pagination des résultats
 - login
+   - page d'accueil
+   - revoirs toutes les query pour user
 - sortir index.htlml de lexique
 - améliore le quizz 
     - reset
-    - back
     -hi score
     - moyenne
     -nb mot

@@ -1,0 +1,52 @@
+<div class="card">
+    <h5 class="card-header">score : {{quizz.score}}/{{quizz.total}}</h5>
+
+    <div class="card-body">
+        <h3 class="card-title text-center">
+            <b> {{quizz.question}} </b>
+            <span class="fs-5"> ({{quizz.langue_q}})</span>
+        </h3>
+
+        <form
+            hx-post="{% url 'quizz:guess' slug=lexique.slug %}"
+            hx-target="#quizzbox"
+            hx-trigger="submit"
+            hx-vals="{{quizz.as_json}}"
+        >
+            {% if quizz.try_index > 3 %}
+            <div class="alert alert-danger row" role="alert">
+                <div class="d-flex align-items-center justify-content-center">
+                    <div>
+                        <i class="fa fa-poo" aria-hidden="true"></i>
+                        La bonne réponse était:
+                        <b class="mx-3">{{quizz.reponse}}</b>
+                    </div>
+                    <input type="hidden" name="go_next" value="1" />
+                    <button class="btn btn-danger ms-3" type="submit" autofocus>
+                        continuer
+                    </button>
+                </div>
+            </div>
+            {% else %}
+            <div class="input-group mb-3">
+                <span class="input-group-text"
+                    >réponse en {{quizz.langue_r}}</span
+                >
+                <input
+                    type="text"
+                    name="guess"
+                    class="form-control"
+                    placeholder="réponse"
+                    aria-label="reponse"
+                    required
+                    autocomplete="off"
+                    autofocus
+                />
+            </div>
+
+            {% include "quizz/comments.html" %}
+             {% endif %}
+            <button type="submit" class="d-none"></button>
+        </form>
+    </div>
+</div>
