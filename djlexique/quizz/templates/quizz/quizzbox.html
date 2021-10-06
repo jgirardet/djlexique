@@ -1,5 +1,14 @@
 <div class="card">
-    <h5 class="card-header">score : {{quizz.score}}/{{quizz.total}}</h5>
+    <div class="d-flex justify-content-between">
+        <h5 class="card-header">score : {{quizz.score}}/{{quizz.total}}</h5>
+        <a
+            class="btn btn-outline-secondary"
+            href="{% url 'quizz:main' slug=lexique.slug %}"
+            hx-boost="true"
+            hx-confirm="Remettre à zéro et recommencer ?"
+            >Recomencer</a
+        >
+    </div>
 
     <div class="card-body">
         <h3 class="card-title text-center">
@@ -44,8 +53,7 @@
                 />
             </div>
 
-            {% include "quizz/comments.html" %}
-             {% endif %}
+            {% include "quizz/comments.html" %} {% endif %}
             <button type="submit" class="d-none"></button>
         </form>
     </div>
