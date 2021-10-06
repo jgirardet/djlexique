@@ -3,11 +3,9 @@ from lexique.forms import LexiqueForm
 from lexique.models import Lexique
 from django.views.decorators.http import require_POST
 
-
 def lexiques_index_view(request):
-    context = {"lexiques": Lexique.objects.all()}
+    context = {"lexiques": Lexique.objects.filter()}
     return render(request, "home/lexiques-index.html", context)
-
 
 @require_POST
 def lexiques_add_view(request):

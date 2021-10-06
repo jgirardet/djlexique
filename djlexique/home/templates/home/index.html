@@ -27,6 +27,13 @@
         </script>
 
         <div class="container pb-3" style="background-color: lightgrey">
+           {% if not request.user.is_anonymous  %}
+            <div class="d-flex justify-content-end align-items-center">
+            <div class="badge bg-secondary fs-4" >{{request.user}} </div>
+            <a href="{% url 'logout' %}" hx-boost="true" class="btn-close" title="déconnexion">
+            </a>
+           </div>
+            {% endif %}
             {% block lexique-content %}{% endblock lexique-content %}
         </div>
     </body>

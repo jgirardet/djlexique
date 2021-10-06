@@ -120,6 +120,14 @@ python-versions = ">=3.6"
 Django = ">=2.2"
 
 [[package]]
+name = "django-login-required-middleware"
+version = "0.6.3"
+description = "Requires login to all requests through middleware."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django-stubs"
 version = "1.9.0"
 description = "Mypy stubs for Django"
@@ -353,7 +361,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "018bc8610b2eb19da15c37a05be773c006c1792bf33e754510afe8db755164bb"
+content-hash = "d3f19f0d8cd4385d930de832f4aeba1b3eca989955bd810b4d82f92cd5538c53"
 
 [metadata.files]
 asgiref = [
@@ -395,6 +403,10 @@ django-dotenv = [
 django-htmx = [
     {file = "django-htmx-1.6.0.tar.gz", hash = "sha256:e985d01831b95ad88d42694f5667ff2732872dcf3334e835eeb0f31dc4a61d46"},
     {file = "django_htmx-1.6.0-py3-none-any.whl", hash = "sha256:917236c85c7e295b1d52972610a4382d1df6e398bdb6bf964b453ac8756f1d8f"},
+]
+django-login-required-middleware = [
+    {file = "django-login-required-middleware-0.6.3.tar.gz", hash = "sha256:2a2ba8816b2a3f2bd5512a44b91e5cd8c87861baa6f3f3f49bb1f63af732585b"},
+    {file = "django_login_required_middleware-0.6.3-py3-none-any.whl", hash = "sha256:97c099e22281c225c7ab068491e8157f2ad5c6df6fe76b2c53e82822b546e2ae"},
 ]
 django-stubs = [
     {file = "django-stubs-1.9.0.tar.gz", hash = "sha256:664843091636a917faf5256d028476559dc360fdef9050b6df87ab61b21607bf"},

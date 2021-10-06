@@ -1,0 +1,22 @@
+{% extends 'home/index.html' %} {% block lexique-content %}
+
+<h1 class="display-1 text-center mb-5">Bienvenue sur <br/>DJ-Lexique</h1>
+
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Utilisateur</span>
+            <input type="text" name="username" class="form-control"></input>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">password</span>
+            <input type="password" name="password" class="form-control"></input>
+        </div>
+    </div>
+    {{form.errors}}
+    <button type="submit" class="btn-lg btn-secondary position-relative start-50">Go</button>
+    </div>
+</form>
+
+{% endblock lexique-content %}
