@@ -1,6 +1,7 @@
 <div class="card">
-    <div class="d-flex justify-content-between">
-        <h5 class="card-header">score : {{quizz.score}}/{{quizz.total}}</h5>
+    <div class="card-header d-flex justify-content-between">
+        <h5>score : {{quizz.score}}/{{quizz.total}}</h5>
+        <div>{% include "quizz/select_filter.html" %}</div>
         <a
             class="btn btn-outline-secondary"
             href="{% url 'quizz:main' slug=lexique.slug %}"
@@ -9,7 +10,6 @@
             >Recomencer</a
         >
     </div>
-
     <div class="card-body">
         <h3 class="card-title text-center">
             <b> {{quizz.question}} </b>

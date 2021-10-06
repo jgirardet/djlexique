@@ -11,3 +11,4 @@ class QuizzForm(forms.Form):
     langue_r = forms.CharField()
     try_index = forms.IntegerField()
     go_next = forms.BooleanField()
+    query_filter = forms.CharField()
