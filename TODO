@@ -6,7 +6,5 @@
     -hi score
     - moyenne
     -nb mot
-    - choix récents
-    - choix mots
 - deploy :
     - static de dev/pkguno
