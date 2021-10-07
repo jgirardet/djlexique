@@ -6,6 +6,9 @@ from django.urls import reverse
 from django.utils.text import slugify
 from .apps import LexiqueConfig
 from django.core.exceptions import FieldError
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Lexique(models.Model):
@@ -13,6 +16,7 @@ class Lexique(models.Model):
     langue1 = models.CharField(max_length=20)
     langue2 = models.CharField(max_length=20)
     slug = models.SlugField(unique=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"lexique {self.langue1} - {self.langue2}"

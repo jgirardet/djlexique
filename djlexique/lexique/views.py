@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from .forms import LexonForm, LexiqueForm
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from django.core.paginator import InvalidPage, Paginator
+from djlexique.utils import get_object_if_owner
 
 #######################################################################
 # Lexique Détail et Lexon
@@ -15,7 +16,7 @@ LEXON_LIST_LIMIT = 100
 
 
 def lexique_home(request, slug: str):
-    lexique = get_object_or_404(Lexique, slug=slug)
+    lexique = get_object_if_owner(request, Lexique, slug=slug)
     qs = lexique.get_lexons_by()[:LEXON_LIST_LIMIT]
     form = LexonForm()
     form.instance.lexique = lexique
@@ -63,27 +64,27 @@ def lexique_add_confirmation_view(request, slug=str):
 def lexique_list_view(request, slug: str):
     search = request.GET.get("search")
     order_by = request.GET.get("order_by")
-    lexique = get_object_or_404(Lexique, slug=slug)
-    qs:QuerySet[Lexon] 
+    lexique = get_object_if_owner(request, Lexique, slug=slug)
+    qs: QuerySet[Lexon]
     if search:
         qs = lexique.search_lexons(search)
     else:
         qs = lexique.get_lexons_by(order_by)
     pages = Paginator(qs, LEXON_LIST_LIMIT)
-    num_page = int(request.GET.get("page", 1) )
+    num_page = int(request.GET.get("page", 1))
     if request.GET.get("next_page"):
-        num_page +=1
+        num_page += 1
     try:
         objects = pages.page(num_page).object_list
     except InvalidPage:
-        return HttpResponse('')
-    context = {"lexique":lexique,"objects": objects, "errors": [], "page":num_page}
+        return HttpResponse("")
+    context = {"lexique": lexique, "objects": objects, "errors": [], "page": num_page}
     return render(request, "lexique/lexon-list.html", context)
 
 
 @require_http_methods(["GET", "POST"])
 def lexon_edit_view(request, id: int):
-    lexon = get_object_or_404(Lexon, id=id)
+    lexon = get_object_if_owner(request, Lexon, id=id, field="lexique.user")
     if request.method == "GET":
         return render(request, "lexique/lexon/edit-form.html", {"object": lexon})
     if request.method == "POST":
@@ -96,7 +97,7 @@ def lexon_edit_view(request, id: int):
 
 @require_GET
 def lexon_delete_view(request, id: int):
-    lexon = get_object_or_404(Lexon, id=id)
+    lexon = get_object_if_owner(request, Lexon, id=id, field="lexique.user")
     lexon.delete()
     return HttpResponse("")
 
@@ -107,7 +108,7 @@ def lexon_delete_view(request, id: int):
 
 
 def get_lexique(request, slug: str):
-    lexique = get_object_or_404(Lexique, slug=slug)
+    lexique = get_object_if_owner(request, Lexique, slug=slug)
     context = {
         "message": None,
         "lexique": lexique,
