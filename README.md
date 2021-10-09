@@ -1,7 +1,7 @@
 Application Lexique a Lexicon App
 
 ### Installation dev
-clone theb `poetry install`
+clone the repo then  `poetry install`
 
 ### Deploy
 see deploy.md
