@@ -11,7 +11,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(',')  #comma separeted value : myfiresthhist,234.234.234.324,anotherone
 
 STATIC_URL = "/static/"
 
@@ -52,12 +52,12 @@ read_env()
 
 ```bash
 $ cd /opt
-$ sudo git clone https://gihub.com/jgirardet/djlexique.git
+$ sudo git clone https://github.com/jgirardet/djlexique.git
+$ sudo chown -R me djlexique
 $ cd djlexique
 $ python3.8 -m venv .venv
 $ source .venv/bin/activate
 $ poetry install
-$ sudo chown -R www-data:www-data *
 ```
 
 ### add .env file
@@ -68,18 +68,23 @@ python -c 'from django.core.management.utils import get_random_secret_key; \
             print(get_random_secret_key())'
 ```
 add .env file next manage.py
-`sudo -u www-data vi .env`
+`vi .env`
 ```env
 SECRET_KEY=thesecretkey
-ALLOWED_HOSTS=["lexique.myhost.com"]
+ALLOWED_HOSTS="lexique.myhost.com"
 ```
 
-### initialise django
-`sudo -u www-data migrate`
-`sudo -u www-data  python manage.py createsuperuser`
+### initialise django et fix permissions
+```
+$ python manage.py migrate
+$ python manage.py createsuperuser
+$ cd /opt
+$ sudo chown -R me:www-data djlexique
+$ deactivate
+```
 
 ### add systemd serviec
-add file `/etc/systemd/system/djlexique.service
+add file `sudo vi /etc/systemd/system/djlexique.service`
 
 ```
 [Unit]
@@ -111,7 +116,7 @@ server {
     server_name lexique.myhost.com; 
     location = /favicon.ico { access_log off; log_not_found off; } 
     location /static/ { 
-        root /opt/djlexique/djlexique/ 
+        root /opt/djlexique/djlexique/;tail  
     } 
     location / { 
         include proxy_params; 
