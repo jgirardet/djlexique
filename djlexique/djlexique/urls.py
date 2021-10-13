@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     path("", include("home.urls")),
     path("lexique/", include("lexique.urls")),
     path("quizz/", include("quizz.urls")),
-    path("accounts/",include('django.contrib.auth.urls')),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += staticfiles_urlpatterns()

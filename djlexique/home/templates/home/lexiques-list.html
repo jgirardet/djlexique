@@ -1,17 +1,31 @@
-    {% for lexique in lexiques %}
-    <li class="list-group-item" >
-        <div class="row col fs-3">
-            <div class="col">{{lexique.langue1}}</div>
-            <div class="col">{{lexique.langue2}}</div>
-            <div class="col">
-                <a   href="{{lexique.get_absolute_url}}"class="btn btn-success" data-bs-toggle="tooltip" title="Lexique" >
-                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-                </a>
-                <a   id="quizz_{{lexique.id}}" href="{%url 'quizz:main'  slug=lexique.slug%}"class="btn btn-warning"  data-bs-toggle="tooltip" title="Quizz" >
-                    <i class="fa fa-question-circle" aria-hidden="true"></i>
-                </a>
-            </div>
+{% for lexique in lexiques %}
+<li class="list-group-item">
+    <div class="row col fs-3">
+        <div class="col">{{lexique.langue1}}</div>
+        <div class="col">{{lexique.langue2}}</div>
+        <div class="col">
+            <a
+                href="{{lexique.get_absolute_url}}"
+                class="btn btn-success"
+                data-bs-toggle="tooltip"
+                title="Lexique"
+            >
+                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+            </a>
+            <a
+                id="quizz_{{lexique.id}}"
+                href="{%url 'quizz:main'  slug=lexique.slug%}"
+                class="btn btn-warning"
+                data-bs-toggle="tooltip"
+                title="Quizz"
+            >
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+            </a>
         </div>
-    </li>
+        <div class="col-2 fs-6 d-flex align-content-center">
+            <span>{{lexique.lexon_set.count}} mots</span>
+        </div>
+    </div>
+</li>
 
-    {% endfor %}
+{% endfor %}
