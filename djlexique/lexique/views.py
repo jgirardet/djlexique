@@ -81,6 +81,12 @@ def lexique_list_view(request, slug: str):
     context = {"lexique": lexique, "objects": objects, "errors": [], "page": num_page}
     return render(request, "lexique/lexon-list.html", context)
 
+def lexique_print_view(request, slug:str):
+    lexique:Lexique = get_object_if_owner(request, Lexique, slug=slug)
+    objects = lexique.get_lexons_by("-created")
+    context = {"lexique": lexique, "objects":objects}
+    return render(request, "lexique/lexique-print.html", context)
+
 
 @require_http_methods(["GET", "POST"])
 def lexon_edit_view(request, id: int):

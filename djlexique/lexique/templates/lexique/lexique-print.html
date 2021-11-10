@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" href="{% static 'print/css/print.css'%}" media="print"> {% endcomment %}
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+    <title>{{lexique|title}}</title>
+</head>
+<body class="container-fluid" id="content" onload="window.print()" >
+<ul 
+    id="lexique_list_entries"
+    class="row"
+>
+{% for object in objects %}
+<div  class="p-2 column col-4">
+<span style="font-size:8px;">{{forloop.counter}}. </span><span>{{object.mot1}}</span> | <span>{{object.mot2}}</span></div>
+
+{% endfor %}
+</ul>
+    
+</body>
+</html>

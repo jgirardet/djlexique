@@ -21,6 +21,15 @@
             >
                 <i class="fa fa-question-circle" aria-hidden="true"></i>
             </a>
+            <a
+                id="print_{{lexique.id}}"
+                href="{%url 'lexique:print'  slug=lexique.slug%}"
+                class="btn btn-info"
+                data-bs-toggle="tooltip"
+                title="Impression"
+            >
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </a>
         </div>
         <div class="col-2 fs-6 d-flex align-content-center">
             <span>{{lexique.lexon_set.count}} mots</span>

@@ -1,3 +1,4 @@
+from __future__ import annotations
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
@@ -38,7 +39,7 @@ class Lexique(models.Model):
     def get_list_lexon_url(self):
         return reverse(f"{LexiqueConfig.name}:list-lexon", kwargs={"slug": self.slug})
 
-    def get_lexons_by(self, order_by: str = "mot1"):
+    def get_lexons_by(self, order_by: str = "mot1") ->QuerySet[Lexon]:
         try:
             return self.lexon_set.order_by(order_by)
         except FieldError:
