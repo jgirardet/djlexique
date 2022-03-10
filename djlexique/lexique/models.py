@@ -1,13 +1,15 @@
 from __future__ import annotations
+
+from django.contrib.auth import get_user_model
+from django.core.exceptions import FieldError
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.db.models.signals import pre_save
 from django.urls import reverse
 from django.utils.text import slugify
+
 from .apps import LexiqueConfig
-from django.core.exceptions import FieldError
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 

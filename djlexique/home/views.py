@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.views.decorators.http import require_POST
+
 from lexique.forms import LexiqueForm
 from lexique.models import Lexique
-from django.views.decorators.http import require_POST
 
 
 def lexiques_index_view(request):

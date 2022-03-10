@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from .quizz import Quizz
-from lexique.models import Lexique
 from django.views.decorators.http import require_POST
-from .forms import QuizzForm
+
 from djlexique.utils import get_object_if_owner
+from lexique.models import Lexique
+
+from .forms import QuizzForm
+from .quizz import Quizz
 
 
 def main_view(request, slug: str):

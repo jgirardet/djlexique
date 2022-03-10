@@ -1,13 +1,14 @@
-from typing import NamedTuple
-from django.db.models.query import QuerySet
-
-from django.http.response import HttpResponse, HttpResponseBadRequest
-from .models import Lexon, Lexique
-from django.shortcuts import get_object_or_404, render
-from .forms import LexonForm, LexiqueForm
-from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from django.core.paginator import InvalidPage, Paginator
+from django.db.models.query import QuerySet
+from django.http.response import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import get_object_or_404, render
+from django.views.decorators.http import (require_GET, require_http_methods,
+                                          require_POST)
+
 from djlexique.utils import get_object_if_owner
+
+from .forms import LexonForm
+from .models import Lexique, Lexon
 
 #######################################################################
 # Lexique Détail et Lexon

@@ -14,15 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from lexique.views import (
-    lexique_home,
-    lexique_add_lexon_view,
-    lexique_list_view,
-    lexon_edit_view,
-    lexique_add_confirmation_view,
-    lexon_delete_view,
-    lexique_print_view
-)
+
+from lexique.views import (lexique_add_confirmation_view,
+                           lexique_add_lexon_view, lexique_home,
+                           lexique_list_view, lexique_print_view,
+                           lexon_delete_view, lexon_edit_view)
+
 from .apps import LexiqueConfig
 
 app_name = LexiqueConfig.name

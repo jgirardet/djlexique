@@ -1,6 +1,7 @@
 from django.urls import path
+
 from .apps import HomeConfig
-from .views import lexiques_index_view, lexiques_add_view
+from .views import lexiques_add_view, lexiques_index_view
 
 app_name = HomeConfig.name
 urlpatterns = [

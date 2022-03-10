@@ -1,7 +1,7 @@
 from django.urls import path
-from .apps import QuizzConfig
-from .views import main_view, guess_view
 
+from .apps import QuizzConfig
+from .views import guess_view, main_view
 
 app_name = QuizzConfig.name
 urlpatterns = [

@@ -1,9 +1,12 @@
 from __future__ import annotations
-import random
-from lexique.models import Lexique, Lexon
-from dataclasses import dataclass, field
+
 import json
+import random
+from dataclasses import dataclass
 from datetime import datetime, timedelta
+from typing import Optional
+
+from lexique.models import Lexique
 
 QUERY_FILTER_CHOICES = [
     {"value": "", "label": "tous les mots disponibles"},
@@ -17,15 +20,18 @@ QUERY_FILTER_CHOICES = [
 
 @dataclass
 class Quizz:
+    """
+        Handle logique of quizz
+    """
     lexique: Lexique
     score: int = 0
     total: int = 0
     query_filter_choices = QUERY_FILTER_CHOICES
-    query_filter: str = "all"
-    langue_q: str = None
-    langue_r: str = None
-    question: str = None
-    reponse: str = None
+    query_filter: Optional[str] = "all"
+    langue_q: Optional[str] = None
+    langue_r: Optional[str] = None
+    question: Optional[str] = None
+    reponse: Optional[str] = None
     try_index: int = 1
     success: bool = False
 

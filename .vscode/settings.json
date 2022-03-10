@@ -1,4 +1,3 @@
 {
     "python.formatting.provider": "black",
-    "cSpell.language": "en,fr"
 }

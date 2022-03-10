@@ -1,5 +1,6 @@
 from django import forms
-from .models import Lexon, Lexique
+
+from .models import Lexique, Lexon
 
 
 class LexonForm(forms.ModelForm):

@@ -13,7 +13,13 @@ from django.core.wsgi import get_wsgi_application
 
 
 def read_env():
+    """Configure environment
+
+    Raises:
+        ImproperlyConfigured: 
+    """
     import pathlib
+
     import dotenv
     from django.core.exceptions import ImproperlyConfigured
 
