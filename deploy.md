@@ -142,6 +142,10 @@ or just run certbot if already installed : `sudo certbot --nginx`
 ## Update un Production
 ```bash
 $ git pull
+$ source .venv/bin/activate
+$ poetry update
+$ python djlexique/manage.py migrate # if needed
+$ deactivate
 $ sudo chown -R me:www-data /opt/djlexique
 $ sudo sytemctl restart djlexique.service
 ```
