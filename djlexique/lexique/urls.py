@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.urls import path
 
-from lexique.views import (lexique_add_confirmation_view,
-                           lexique_add_lexon_view, lexique_home,
-                           lexique_list_view, lexique_print_view,
-                           lexon_delete_view, lexon_edit_view)
+from lexique.views import (
+    lexique_add_confirmation_view,
+    lexique_add_lexon_view,
+    lexique_home,
+    lexique_list_view,
+    lexique_print_view,
+    lexon_delete_view,
+    lexon_edit_view,
+)
 
 from .apps import LexiqueConfig
 

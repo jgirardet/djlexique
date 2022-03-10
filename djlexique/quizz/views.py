@@ -19,6 +19,12 @@ def main_view(request, slug: str):
 
 @require_POST
 def guess_view(request, slug: str):
+    """guess view
+
+    Args:
+        request (Request): django request
+        slug (str): lexique slug
+    """
     lexique = get_object_if_owner(request, Lexique, slug=slug)
     form = QuizzForm(request.POST or None)
     form.full_clean()
@@ -30,5 +36,4 @@ def guess_view(request, slug: str):
     elif quizz.check(guess):
         quizz.next_pick(success=True)
     context = {"quizz": quizz, "lexique": lexique}
-    print(quizz)
     return render(request, "quizz/quizzbox.html", context)

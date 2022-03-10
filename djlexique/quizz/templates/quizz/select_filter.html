@@ -5,11 +5,12 @@
             hx-boost="true"
             hx-confirm="Cela va remettre à zéro et recommencer, confirmer ?"
         >
+{% csrf_token %}
         <select
             class="form-select"
             aria-label="filtre quizz"
             name="query_filter"
-            _="on change  send submit to #select_form ">
+            _="on change tell #select_form  you.submit()">
             
             {% for opt in quizz.query_filter_choices %}
             <option   value="{{opt.value}}" {% if quizz.query_filter == opt.value %}selected{% endif %}>

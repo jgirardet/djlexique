@@ -16,7 +16,7 @@ def read_env():
     """Configure environment
 
     Raises:
-        ImproperlyConfigured: 
+        ImproperlyConfigured:
     """
     import pathlib
 

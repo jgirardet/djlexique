@@ -2,8 +2,7 @@ from django.core.paginator import InvalidPage, Paginator
 from django.db.models.query import QuerySet
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render
-from django.views.decorators.http import (require_GET, require_http_methods,
-                                          require_POST)
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 from djlexique.utils import get_object_if_owner
 
@@ -82,10 +81,11 @@ def lexique_list_view(request, slug: str):
     context = {"lexique": lexique, "objects": objects, "errors": [], "page": num_page}
     return render(request, "lexique/lexon-list.html", context)
 
-def lexique_print_view(request, slug:str):
-    lexique:Lexique = get_object_if_owner(request, Lexique, slug=slug)
+
+def lexique_print_view(request, slug: str):
+    lexique: Lexique = get_object_if_owner(request, Lexique, slug=slug)
     objects = lexique.get_lexons_by("-created")
-    context = {"lexique": lexique, "objects":objects}
+    context = {"lexique": lexique, "objects": objects}
     return render(request, "lexique/lexique-print.html", context)
 
 

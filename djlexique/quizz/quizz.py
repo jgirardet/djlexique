@@ -10,8 +10,11 @@ from lexique.models import Lexique
 
 QUERY_FILTER_CHOICES = [
     {"value": "", "label": "tous les mots disponibles"},
+    {"value": "7-jours", "label": "7 derniers jours"},
     {"value": "15-jours", "label": "15 derniers jours"},
     {"value": "30-jours", "label": "30 derniers jours"},
+    {"value": "5-mots", "label": "5 derniers mots"},
+    {"value": "10-mots", "label": "10 derniers mots"},
     {"value": "20-mots", "label": "20 derniers mots"},
     {"value": "50-mos", "label": "50 derniers mots"},
     {"value": "100-mots", "label": "100 derniers mots"},
@@ -21,8 +24,9 @@ QUERY_FILTER_CHOICES = [
 @dataclass
 class Quizz:
     """
-        Handle logique of quizz
+    Handle logique of quizz
     """
+
     lexique: Lexique
     score: int = 0
     total: int = 0
@@ -41,6 +45,7 @@ class Quizz:
         self.query_filter_choices = QUERY_FILTER_CHOICES
 
     def load_new_question(self) -> None:
+        """lance une nouvelle question"""
         qs = self._get_query_set()
         lexon = random.choice(qs)
         order = [1, 2]
@@ -53,18 +58,18 @@ class Quizz:
     def _get_query_set(self):
         objects = self.lexique.lexon_set
         default = objects.all()
-        nb: str
+        nombre: str
         param: str
         try:
-            nb, param = self.query_filter.split("-")
+            nombre, param = self.query_filter.split("-")
         except ValueError:
             return default
-        if not nb or not param:
-            default
-        elif param == "jours" and nb.isdigit():
-            return objects.filter(created__gte=datetime.now() - timedelta(days=int(nb)))
-        elif param == "mots" and nb.isdigit():
-            return objects.order_by("-created")[: int(nb)]
+        if param == "jours" and nombre.isdigit():
+            return objects.filter(
+                created__gte=datetime.now() - timedelta(days=int(nombre))
+            )
+        if param == "mots" and nombre.isdigit():
+            return objects.order_by("-created")[: int(nombre)]
         return default
 
     def next_pick(self, success=False):
