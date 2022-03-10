@@ -139,7 +139,7 @@ Install certbot : `https://certbot.eff.org/`
 or just run certbot if already installed : `sudo certbot --nginx`
 
 
-## Update un Productoin
+## Update un Production
 ```bash
 $ git pull
 $ sudo chown -R me:www-data /opt/djlexique
