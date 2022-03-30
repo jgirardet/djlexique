@@ -30,7 +30,7 @@ def guess_view(request, slug: str):
     lexique = get_object_if_owner(request, Lexique, slug=slug)
     form = QuizzForm(request.POST or None)
 
-    assert form.is_valid(), f"{form.er}.join('\n')"
+    assert form.is_valid(), f"{form.errors}.join('\n')"
     guess = form.cleaned_data.pop("guess", "")
     go_next = form.cleaned_data.pop("go_next", None)
     quizz = Quizz(**form.cleaned_data, lexique=lexique)

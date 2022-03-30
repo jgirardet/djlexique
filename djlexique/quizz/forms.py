@@ -9,7 +9,7 @@ class QuizzForm(forms.Form):
     total = forms.IntegerField()
     reponse = forms.CharField()
     question = forms.CharField()
-    guess = forms.CharField()
+    guess = forms.CharField(required=False)
     langue_q = forms.CharField()
     langue_r = forms.CharField()
     try_index = forms.IntegerField()
