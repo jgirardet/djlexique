@@ -4,7 +4,7 @@ import json
 import random
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Any, Optional
 
 from lexique.models import Lexique
 
@@ -38,22 +38,38 @@ class Quizz:
     reponse: Optional[str] = None
     try_index: int = 1
     success: bool = False
+    source_choices: Optional[list[dict[str, Any]]] = None
+    source: int = 0
 
     def __post_init__(self, **kwargs) -> None:
         self.score = int(self.score)
         self.total = int(self.total)
         self.query_filter_choices = QUERY_FILTER_CHOICES
+        self.source_choices = self._get_source_choice(self.lexique)
 
     def load_new_question(self) -> None:
         """lance une nouvelle question"""
         qs = self._get_query_set()
+
         lexon = random.choice(qs)
+
         order = [1, 2]
-        random.shuffle(order)
+        if not self.source:
+            random.shuffle(order)
+        if self.source == 2:
+            order.reverse()
+
         self.langue_q = getattr(lexon.lexique, f"langue{order[0]}")
         self.langue_r = getattr(lexon.lexique, f"langue{order[1]}")
         self.question = getattr(lexon, f"mot{order[0]}")
         self.reponse = getattr(lexon, f"mot{order[1]}")
+
+    def _get_source_choice(self, lexique):
+        return [
+            {"value": 0, "label": "Les deux"},
+            {"value": 1, "label": lexique.langue1},
+            {"value": 2, "label": lexique.langue2},
+        ]
 
     def _get_query_set(self):
         objects = self.lexique.lexon_set
@@ -65,14 +81,23 @@ class Quizz:
         except ValueError:
             return default
         if param == "jours" and nombre.isdigit():
-            return objects.filter(
-                created__gte=datetime.now() - timedelta(days=int(nombre))
+            return (
+                objects.filter(
+                    created__gte=datetime.now() - timedelta(days=int(nombre))
+                )
+                or default  # sinon index error plus loin
             )
+
         if param == "mots" and nombre.isdigit():
-            return objects.order_by("-created")[: int(nombre)]
+            return objects.order_by("-created")[: int(nombre)] or default
         return default
 
     def next_pick(self, success=False):
+        """Prochain choix
+
+        Args:
+            success (bool, optional): La réponse a été bonne. Defaults to False.
+        """
         if success:
             self.score += 1
         self.total += 1
@@ -80,6 +105,7 @@ class Quizz:
         self.load_new_question()
 
     def check(self, other: str) -> bool:
+        """Verifie la réponse"""
         if self.reponse == other:
             self.success = True
             return True
@@ -89,6 +115,7 @@ class Quizz:
 
     @property
     def as_dict(self):
+        """Conversion en dict"""
         return {
             "langue_q": self.langue_q,
             "langue_r": self.langue_r,
@@ -99,6 +126,8 @@ class Quizz:
             "try_index": self.try_index,
             "query_filter": self.query_filter,
             "query_filter_choices": self.query_filter_choices,
+            "source_choices": self.source_choices,
+            "source": self.source,
         }
 
     @property

@@ -11,7 +11,9 @@ from .quizz import Quizz
 def main_view(request, slug: str):
     lexique = get_object_if_owner(request, Lexique, slug=slug)
     query_filter = request.POST.get("query_filter", "all")
-    quizz = Quizz(lexique=lexique, query_filter=query_filter)
+    source = int(request.POST.get("source", 0))
+
+    quizz = Quizz(lexique=lexique, query_filter=query_filter, source=source)
     quizz.load_new_question()
     context = {"quizz": quizz, "lexique": lexique}
     return render(request, "quizz/main.html", context)
@@ -27,7 +29,8 @@ def guess_view(request, slug: str):
     """
     lexique = get_object_if_owner(request, Lexique, slug=slug)
     form = QuizzForm(request.POST or None)
-    form.full_clean()
+
+    assert form.is_valid(), f"{form.er}.join('\n')"
     guess = form.cleaned_data.pop("guess", "")
     go_next = form.cleaned_data.pop("go_next", None)
     quizz = Quizz(**form.cleaned_data, lexique=lexique)

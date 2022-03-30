@@ -1,6 +1,8 @@
+- supprimer lexique
 - améliore le quizz 
-    -hi score
+    - hi score
     - moyenne
-    -nb mot
 - deploy :
     - static de dev/pkguno
+
+- nombre de colonne

@@ -1,0 +1,23 @@
+<form
+            id="select_source"
+            action="{% url 'quizz:main' slug=lexique.slug %}"
+            method="POST"
+            hx-boost="true"
+            hx-confirm="Cela va remettre à zéro et recommencer, confirmer ?"
+        >
+ {% csrf_token %}
+        <select
+            class="form-select"
+            aria-label="source quizz"
+            name="source"
+            _="on change tell #select_source  you.submit()">
+            
+            {% for opt in quizz.source_choices %}
+            <option   value="{{opt.value}}" {% if quizz.source == opt.value %}selected{% endif %}>
+                {{opt.label}}
+            </option>
+            {% endfor %}
+
+        </select> 
+        <input type="hidden" name="query_filter" value="{{quizz.query_filter}}">
+ </form>

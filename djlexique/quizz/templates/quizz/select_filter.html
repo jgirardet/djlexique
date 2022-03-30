@@ -6,7 +6,7 @@
             hx-confirm="Cela va remettre à zéro et recommencer, confirmer ?"
         >
 {% csrf_token %}
-        <select
+         <select
             class="form-select"
             aria-label="filtre quizz"
             name="query_filter"
@@ -18,5 +18,6 @@
             </option>
             {% endfor %}
 
-        </select>
+        </select> 
+        <input type="hidden" name="source" value="{{quizz.source}}">
  </form>

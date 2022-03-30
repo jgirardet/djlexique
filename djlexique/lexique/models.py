@@ -70,6 +70,8 @@ pre_save.connect(article_pre_save, sender=Lexique)
 
 
 class Lexon(models.Model):
+    """DEfault lexon class"""
+
     mot1 = models.CharField(max_length=40)
     mot2 = models.CharField(max_length=40)
     created = models.DateTimeField(auto_now_add=True)

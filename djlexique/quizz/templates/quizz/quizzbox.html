@@ -2,6 +2,7 @@
     <div class="card-header d-flex justify-content-between">
         <h5>score : {{quizz.score}}/{{quizz.total}}</h5>
         <div>{% include "quizz/select_filter.html" %}</div>
+        <div>{% include "quizz/source.html" %}</div>
         <a
             class="btn btn-outline-secondary"
             href="{% url 'quizz:main' slug=lexique.slug %}"
