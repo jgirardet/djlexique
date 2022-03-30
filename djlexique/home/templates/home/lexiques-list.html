@@ -1,5 +1,5 @@
 {% for lexique in lexiques %}
-<li class="list-group-item">
+<li id="lexique_{{lexique.id}}" class="list-group-item">
     <div class="row col fs-3">
         <div class="col">{{lexique.langue1}}</div>
         <div class="col">{{lexique.langue2}}</div>
@@ -29,6 +29,18 @@
                 title="Impression"
             >
                 <i class="fa fa-print" aria-hidden="true"></i>
+            </a>
+            <a
+                id="delete_{{lexique.id}}"
+                hx-get="{%url 'home:lexiques-delete'  slug=lexique.slug%}"
+                hx-target="#lexique_{{lexique.id}}"
+                hx-swap="outerHTML"
+                hx-confirm="Confirmer la suppression de ce Lexique ? Attention la suppresion est définitive."
+                class="btn btn-danger"
+                data-bs-toggle="tooltip"
+                title="Supprimer"
+            >
+                <i class="fa fa-trash" aria-hidden="true"></i>
             </a>
         </div>
         <div class="col-2 fs-6 d-flex align-content-center">
