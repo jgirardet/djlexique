@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, Optional
 
-from lexique.models import Lexique
+from lexique.models import Lexique, Lexon
 
 QUERY_FILTER_CHOICES = [
     {"value": "", "label": "tous les mots disponibles"},
@@ -28,6 +28,7 @@ class Quizz:
     """
 
     lexique: Lexique
+    lexon_id: int = 0
     score: int = 0
     total: int = 0
     query_filter_choices = QUERY_FILTER_CHOICES
@@ -51,7 +52,7 @@ class Quizz:
         """lance une nouvelle question"""
         qs = self._get_query_set()
 
-        lexon = random.choice(qs)
+        lexon: Lexon = Lexon.choose_lexon(qs)
 
         order = [1, 2]
         if not self.source:
@@ -63,6 +64,7 @@ class Quizz:
         self.langue_r = getattr(lexon.lexique, f"langue{order[1]}")
         self.question = getattr(lexon, f"mot{order[0]}")
         self.reponse = getattr(lexon, f"mot{order[1]}")
+        self.lexon_id = lexon.pk
 
     def _get_source_choice(self, lexique):
         return [
@@ -98,6 +100,7 @@ class Quizz:
         Args:
             success (bool, optional): La réponse a été bonne. Defaults to False.
         """
+        self.update_lexon_stats(success)
         if success:
             self.score += 1
         self.total += 1
@@ -112,6 +115,10 @@ class Quizz:
         self.success = False
         self.try_index += 1
         return False
+
+    def update_lexon_stats(self, success: bool):
+        lexon = Lexon.objects.get(pk=self.lexon_id)
+        lexon.udpate_asked(success)
 
     @property
     def as_dict(self):
@@ -128,6 +135,7 @@ class Quizz:
             "query_filter_choices": self.query_filter_choices,
             "source_choices": self.source_choices,
             "source": self.source,
+            "lexon_id": self.lexon_id,
         }
 
     @property

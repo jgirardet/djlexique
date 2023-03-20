@@ -16,3 +16,4 @@ class QuizzForm(forms.Form):
     go_next = forms.BooleanField(required=False)
     query_filter = forms.CharField()
     source = forms.IntegerField(required=False)
+    lexon_id = forms.IntegerField()

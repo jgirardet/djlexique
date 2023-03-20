@@ -1,4 +1,5 @@
 from __future__ import annotations
+import random
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import FieldError
@@ -76,12 +77,38 @@ class Lexon(models.Model):
     mot2 = models.CharField(max_length=40)
     created = models.DateTimeField(auto_now_add=True)
     lexique = models.ForeignKey(Lexique, on_delete=models.CASCADE)
+    time_asked = models.PositiveIntegerField(default=0, blank=False)
+    streak = models.SmallIntegerField(default=0, blank=False)
 
     def __str__(self) -> str:
         return f"{self.mot1}   -   {self.mot2}"
+
+    def __repr__(self) -> str:
+        return f"{self.mot1} {self.mot2}: [{self.time_asked}/{self.streak}]"
 
     def get_edit_url(self) -> str:
         return reverse(f"{LexiqueConfig.name}:edit-lexon", kwargs={"id": self.id})
 
     def get_delete_url(self):
         return reverse(f"{LexiqueConfig.name}:delete-lexon", kwargs={"id": self.id})
+
+    def udpate_asked(self, success: bool):
+        """on ajoute 1 à la série en cours si juste sinon on repart à zero"""
+        self.time_asked += 1
+        if success:
+            self.streak = min(self.streak + 1, 3)
+        else:
+            self.streak = 0
+        self.save()
+
+    @staticmethod
+    def choose_lexon(qs: QuerySet) -> Lexon:
+        """tire au hasard un lexo en ponderant selon la streak"""
+        res = []
+        for streak, weight in zip(range(4), (7, 4, 2, 1)):
+            try:
+                res += list(set(random.choices(qs.filter(streak=streak), k=weight)))
+            except IndexError:
+                res += list(set(qs.filter(streak=streak)))
+        print(res)
+        return random.choice(res)
