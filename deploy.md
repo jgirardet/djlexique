@@ -144,7 +144,8 @@ or just run certbot if already installed : `sudo certbot --nginx`
 $ git pull
 $ source .venv/bin/activate
 $ poetry update
-$ python djlexique/manage.py migrate # if needed
+$ sav ddb si migration
+$ python manage.py migrate # if needed
 $ deactivate
 $ sudo chown -R me:www-data /opt/djlexique
 $ sudo sytemctl restart djlexique.service
